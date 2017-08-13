@@ -132,6 +132,10 @@ object LivyRestClientService   {
       "import org.locationtech.geomesa.spark.{GeoMesaSpark, GeoMesaSparkKryoRegistrator}\n" +
       "import org.opengis.feature.simple.SimpleFeature").result().left
 
+    interactiveSession.run("val sparkSession = SparkSession.builder().appName(\"testSpark\").config(\"spark.sql.crossJoin.enabled\", \"true\").config(\"zookeeper.znode.parent\", \"/hbase-unsecure\").config(\"spark.sql.autoBroadcastJoinThreshold\", 1024*1024*200).getOrCreate()").result().left.foreach(println(_))
+    interactiveSession.run("val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\")).option(\"geomesa.feature\", \"event\").load()").result().left.foreach(println(_))
+
+
 
   }
   def createClient(uri: String): LivyClient = {
@@ -199,7 +203,7 @@ object LivyRestClientService   {
                           "conf" -> Map (
                             "spark.driver.memory" -> "1g",
                             "spark.yarn.driver.memoryOverhead" -> "256",
-                            "spark.executor.instances"-> "20",
+                            "spark.executor.instances"-> "40",
                             "spark.executor.memory" -> "1g",
                             "spark.yarn.executor.memoryOverhead" ->"256",
                             "spark.executor.cores"->"1",

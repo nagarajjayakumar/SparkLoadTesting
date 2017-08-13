@@ -40,8 +40,7 @@
     <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.0.44.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-codec:4.0.44.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-handler:4.0.44.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.gatling.highcharts:gatling-charts-highcharts:2.2.5" level="project" />
-    <orderEntry type="library" name="Maven: io.gatling.highcharts:gatling-highcharts-maven-archetype:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling.highcharts:gatling-charts-highcharts:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.7" level="project" />
     <orderEntry type="library" name="Maven: io.gatling:gatling-core:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: io.gatling:gatling-commons:2.2.5" level="project" />

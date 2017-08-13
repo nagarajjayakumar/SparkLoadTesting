@@ -31,6 +31,8 @@ class RestServiceActor extends Actor with RestService {
   */
 trait RestService extends HttpService with SLF4JLogging {
 
+  val livyRestClientService = LivyRestClientService
+
   implicit val executionContext = actorRefFactory.dispatcher
 
   implicit val liftJsonFormats = new Formats {
@@ -83,7 +85,7 @@ trait RestService extends HttpService with SLF4JLogging {
               handleRequest(ctx) {
                 log.debug("Searching for customers with parameters: %s".format(
                   sparkStatement))
-                LivyRestClientService.runCommand(sparkStatement)
+                livyRestClientService.runCommand(sparkStatement)
               }
             }
           }
@@ -93,7 +95,7 @@ trait RestService extends HttpService with SLF4JLogging {
         get { ctx: RequestContext =>
           handleRequest(ctx) {
             log.debug("Finally Closing Connection")
-            LivyRestClientService.closeConnection
+            livyRestClientService.closeConnection
           }
         }
       }

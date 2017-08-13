@@ -22,6 +22,9 @@
         <scala-maven-plugin.version>3.2.2</scala-maven-plugin.version>
         <scala.binary.version>2.11</scala.binary.version>
 
+        <gatling.simulations.package>com.hortonworks.gc.gatling.simulation</gatling.simulations.package>
+        <gatling.simulation.name>HttpSimulation1</gatling.simulation.name>
+
     </properties>
 
 
@@ -46,12 +49,9 @@
             <groupId>io.gatling.highcharts</groupId>
             <artifactId>gatling-charts-highcharts</artifactId>
             <version>${gatling-highcharts.version}</version>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.gatling.highcharts</groupId>
-            <artifactId>gatling-highcharts-maven-archetype</artifactId>
-            <version>${gatling-highcharts.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
@@ -255,6 +255,23 @@
             <!--</execution>-->
             <!--</executions>-->
             <!--</plugin>-->
+
+
+            <plugin>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>${gatling-plugin.version}</version>
+                <configuration>
+                    <simulationClass>${gatling.simulations.package}.${gatling.simulation.name}</simulationClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
