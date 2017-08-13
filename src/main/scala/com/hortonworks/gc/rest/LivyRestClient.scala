@@ -1,4 +1,4 @@
-package com.hortonworks.gc
+package com.hortonworks.gc.rest
 
 import java.util.regex.Pattern
 import javax.servlet.http.HttpServletResponse

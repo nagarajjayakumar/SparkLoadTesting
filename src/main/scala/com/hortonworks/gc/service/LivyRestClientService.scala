@@ -1,6 +1,5 @@
-package main.scala.com.hortonworks.gc
+package com.hortonworks.gc.service
 
-import java.io.File
 import java.net.URI
 import java.util.concurrent.TimeUnit
 
@@ -9,17 +8,23 @@ import com.cloudera.livy.sessions.SessionKindModule
 import com.cloudera.livy.{LivyClient, LivyClientBuilder}
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.hortonworks.gc.LivyRestClient
+import com.hortonworks.gc.rest.LivyRestClient
 import com.ning.http.client.AsyncHttpClient
 import org.apache.http.client.methods.HttpDelete
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
+import javax.servlet.http.HttpServletResponse
+
+import com.hortonworks.gc.domain.{Failure, SparkStatement}
+import com.hortonworks.gc.rest.LivyRestClient.StatementError
+
+import scala.util.Either
 
 //import scalaj.collection.Imports._
 //import scala.collection.JavaConversions._
 
 
-object GeoMesaBasicSimulation  {
+object LivyRestClientService   {
 
 
   class SessionList {
@@ -29,7 +34,7 @@ object GeoMesaBasicSimulation  {
   }
 
   private var livyClient: LivyClient = _
-  private var sessionId: Int = _
+
   private val mapper = new ObjectMapper()
     .registerModule(DefaultScalaModule)
     .registerModule(new SessionKindModule())
@@ -37,89 +42,55 @@ object GeoMesaBasicSimulation  {
   val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
 
 
-  var httpClient: AsyncHttpClient = _
-  var livyRestClient: LivyRestClient = _
+  val httpClient: AsyncHttpClient = new AsyncHttpClient()
+  val livyRestClient: LivyRestClient = new LivyRestClient(httpClient, livyEndpoint)
 
+  createLivyContainer()
 
-  import javax.servlet.http.HttpServletResponse
+  val sessionId = createLivySession(livyEndpoint)
+
+  val interactiveSession = livyRestClient.connectSession(sessionId)
+
+  val defaultSparkStatement = "val sparkVersion = sc.version"
+
+  val initImports = initSparkStatement()
 
   def main(args: Array[String]): Unit = {
 
     try {
-      httpClient = new AsyncHttpClient()
-      livyRestClient = new LivyRestClient(httpClient, livyEndpoint)
-
-      // Create the livy client - nothing but creates the yarn containers with the given conf
-      //livyClient = createClient(livyEndpoint)
-
-      createLivyContainer()
-
-      val sessionId = createLivySession(livyEndpoint)
-
-      //livyClient.addJar(new URI("hdfs://csma0.field.hortonworks.com:8020/tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/geomesa-hbase-spark-runtime_2.11-1.3.2.jar")).get()
-      //livyClient.addFile(new URI("hdfs://csma0.field.hortonworks.com:8020/tmp/etc/hbase/conf/hbase-site.xml")).get(2, TimeUnit.MINUTES)
-
-
-      val interactiveSession = livyRestClient.connectSession(sessionId)
-
-      interactiveSession.run("val sparkVersion = sc.version").result().left.foreach(println(_))
-      println(s" Valid session ID $sessionId")
-
-
-      interactiveSession.run("import org.apache.spark.sql.SparkSession\n" +
-        "import org.apache.spark.sql.SQLContext\nimport org.apache.hadoop.conf.Configuration\n" +
-        "import org.apache.spark.rdd.RDD\nimport org.apache.spark.sql.{Row, SparkSession}\n" +
-        "import org.geotools.data.{DataStoreFinder, Query}\nimport org.geotools.factory.CommonFactoryFinder\n" +
-        "import org.geotools.filter.text.ecql.ECQL\nimport org.locationtech.geomesa.hbase.data.HBaseDataStore\n" +
-        "import org.locationtech.geomesa.spark.{GeoMesaSpark, GeoMesaSparkKryoRegistrator}\n" +
-        "import org.opengis.feature.simple.SimpleFeature").result().left
-
-      interactiveSession.run("import org.apache.spark.sql.SparkSession").result().left.foreach(println(_))
-      interactiveSession.run("import org.apache.spark.sql.SQLContext").result().left.foreach(println(_))
-      interactiveSession.run("import org.apache.hadoop.conf.Configuration").result().left.foreach(println(_))
-      interactiveSession.run("import org.apache.spark.rdd.RDD").result().left.foreach(println(_))
-      interactiveSession.run("import org.apache.spark.sql.{Row, SparkSession}").result().left.foreach(println(_))
-      interactiveSession.run("import org.geotools.data.{DataStoreFinder, Query}").result().left.foreach(println(_))
-      interactiveSession.run("import org.geotools.factory.CommonFactoryFinder").result().left.foreach(println(_))
-      interactiveSession.run("import org.geotools.filter.text.ecql.ECQL").result().left.foreach(println(_))
-      interactiveSession.run("import org.locationtech.geomesa.hbase.data.HBaseDataStore").result().left.foreach(println(_))
-      interactiveSession.run("import org.locationtech.geomesa.spark.{GeoMesaSpark, GeoMesaSparkKryoRegistrator}").result().left.foreach(println(_))
-      interactiveSession.run("import org.opengis.feature.simple.SimpleFeature").result().left.foreach(println(_))
-
-      println(s" Valid session ID $sessionId")
 
 
       interactiveSession.run("val sparkSession = SparkSession.builder().appName(\"testSpark\").config(\"spark.sql.crossJoin.enabled\", \"true\").config(\"zookeeper.znode.parent\", \"/hbase-unsecure\").config(\"spark.sql.autoBroadcastJoinThreshold\", 1024*1024*200).getOrCreate()").result().left.foreach(println(_))
       interactiveSession.run("val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\")).option(\"geomesa.feature\", \"event\").load()").result().left.foreach(println(_))
-
       println(s" Valid session ID $sessionId")
-
       interactiveSession.run("dataFrame.show(1)").result().left
-      // Walid Idle session ID is
-
       println(s" Valid session ID $sessionId")
-
-      // Stop the ning HTTP Client
-
-
-
-      if(livyClient != null)
-        livyClient.stop(true)
-
-      livyRestClient.connectSession(sessionId).stop()
-
-      println("all done ")
 
 
     }finally {
       // Stop the ning HTTP Client
-
-      if(httpClient != null)
-        httpClient.close()
+      closeConnection()
 
       println("finally all done ")
     }
 
+  }
+
+  def runCommand (sparkStatement: SparkStatement): Either[String, StatementError] ={
+    interactiveSession.run(sparkStatement.code.getOrElse(defaultSparkStatement)).result()
+  }
+
+  def closeConnection (): Either[String, StatementError]  ={
+
+    if(livyClient != null)
+      livyClient.stop(true)
+
+    livyRestClient.connectSession(sessionId).stop()
+
+    if(httpClient != null)
+      httpClient.close()
+
+    Left("""Finally All Done""")
   }
 
   def createLivySession (livyUrl:String): Int = {
@@ -147,6 +118,22 @@ object GeoMesaBasicSimulation  {
     idleSessionId
   }
 
+  def initSparkStatement(): Unit ={
+
+    interactiveSession.run("val sparkVersion = sc.version").result().left.foreach(println(_))
+    println(s" Valid session ID $sessionId")
+
+
+    interactiveSession.run("import org.apache.spark.sql.SparkSession\n" +
+      "import org.apache.spark.sql.SQLContext\nimport org.apache.hadoop.conf.Configuration\n" +
+      "import org.apache.spark.rdd.RDD\nimport org.apache.spark.sql.{Row, SparkSession}\n" +
+      "import org.geotools.data.{DataStoreFinder, Query}\nimport org.geotools.factory.CommonFactoryFinder\n" +
+      "import org.geotools.filter.text.ecql.ECQL\nimport org.locationtech.geomesa.hbase.data.HBaseDataStore\n" +
+      "import org.locationtech.geomesa.spark.{GeoMesaSpark, GeoMesaSparkKryoRegistrator}\n" +
+      "import org.opengis.feature.simple.SimpleFeature").result().left
+
+
+  }
   def createClient(uri: String): LivyClient = {
     val props =
       Map("spark.sql.crossJoin.enabled" -> "true",
