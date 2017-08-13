@@ -1,38 +1,22 @@
 package main.scala.com.hortonworks.gc
 
+import java.io.File
 import java.net.URI
-import java.util
+import java.util.concurrent.TimeUnit
 
-import com.cloudera.livy.{LivyClient, LivyClientBuilder}
-import io.gatling.core.Predef._
-import io.gatling.core.scenario.Simulation
-import io.gatling.http.Predef._
-import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPost}
-import org.apache.http.entity.StringEntity
-import org.apache.http.impl.client.DefaultHttpClient
-import org.apache.http.util.EntityUtils
-import com.google.gson.Gson
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-import scala.collection.JavaConverters._
 import com.cloudera.livy.client.common.HttpMessages.SessionInfo
+import com.cloudera.livy.sessions.SessionKindModule
+import com.cloudera.livy.{LivyClient, LivyClientBuilder}
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.cloudera.livy.sessions.{SessionKindModule, SessionState}
 import com.hortonworks.gc.LivyRestClient
 import com.ning.http.client.AsyncHttpClient
-import com.cloudera.livy.sessions._
-import main.scala.com.hortonworks.gc.GeoMesaBasicSimulation.{livyClient, sessionId}
-
-import scala.concurrent.duration._
+import org.apache.http.client.methods.HttpDelete
+import org.apache.http.impl.client.DefaultHttpClient
+import org.apache.http.util.EntityUtils
 
 //import scalaj.collection.Imports._
 //import scala.collection.JavaConversions._
-import scala.util.control.Breaks._
-
-import scala.collection.JavaConverters._
-import scala.collection.JavaConverters._
-import collection.JavaConversions._
 
 
 object GeoMesaBasicSimulation  {
@@ -50,7 +34,7 @@ object GeoMesaBasicSimulation  {
     .registerModule(DefaultScalaModule)
     .registerModule(new SessionKindModule())
 
-  val livyEndpoint = "http://cssc0.field.hortonworks.com:8999"
+  val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
 
 
   var httpClient: AsyncHttpClient = _
@@ -59,7 +43,6 @@ object GeoMesaBasicSimulation  {
 
   import javax.servlet.http.HttpServletResponse
 
-
   def main(args: Array[String]): Unit = {
 
     try {
@@ -67,9 +50,15 @@ object GeoMesaBasicSimulation  {
       livyRestClient = new LivyRestClient(httpClient, livyEndpoint)
 
       // Create the livy client - nothing but creates the yarn containers with the given conf
-      livyClient = createClient(livyEndpoint)
+      //livyClient = createClient(livyEndpoint)
+
+      createLivyContainer()
 
       val sessionId = createLivySession(livyEndpoint)
+
+      //livyClient.addJar(new URI("hdfs://csma0.field.hortonworks.com:8020/tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/geomesa-hbase-spark-runtime_2.11-1.3.2.jar")).get()
+      //livyClient.addFile(new URI("hdfs://csma0.field.hortonworks.com:8020/tmp/etc/hbase/conf/hbase-site.xml")).get(2, TimeUnit.MINUTES)
+
 
       val interactiveSession = livyRestClient.connectSession(sessionId)
 
@@ -100,7 +89,10 @@ object GeoMesaBasicSimulation  {
       println(s" Valid session ID $sessionId")
 
 
-      interactiveSession.run("val dataFrame = sparkSession.read\n      .format(\"geomesa\")\n      .options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\"))\n      .option(\"geomesa.feature\", \"event\")\n      .load()")
+      interactiveSession.run("val sparkSession = SparkSession.builder().appName(\"testSpark\").config(\"spark.sql.crossJoin.enabled\", \"true\").config(\"zookeeper.znode.parent\", \"/hbase-unsecure\").config(\"spark.sql.autoBroadcastJoinThreshold\", 1024*1024*200).getOrCreate()").result().left.foreach(println(_))
+      interactiveSession.run("val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\")).option(\"geomesa.feature\", \"event\").load()").result().left.foreach(println(_))
+
+      println(s" Valid session ID $sessionId")
 
       interactiveSession.run("dataFrame.show(1)").result().left
       // Walid Idle session ID is
@@ -121,6 +113,7 @@ object GeoMesaBasicSimulation  {
 
     }finally {
       // Stop the ning HTTP Client
+
       if(httpClient != null)
         httpClient.close()
 
@@ -206,6 +199,50 @@ object GeoMesaBasicSimulation  {
     val responseBody = EntityUtils.toString(response.getEntity)
 
     println(responseBody)
+
+  }
+
+  private def   createLivyContainer(): Unit = {
+    val requestBody = Map(
+//                          "driverMemory" -> "1g",
+//                          "numExecutors" -> 10,
+//                          "executorMemory" -> "1g",
+//                          "executorCores" -> 1,
+                         // "kind" -> "spark",
+                          "conf" -> Map (
+                            "spark.driver.memory" -> "1g",
+                            "spark.yarn.driver.memoryOverhead" -> "256",
+                            "spark.executor.instances"-> "20",
+                            "spark.executor.memory" -> "1g",
+                            "spark.yarn.executor.memoryOverhead" ->"256",
+                            "spark.executor.cores"->"1",
+                            "spark.memory.fraction" -> "0.2",
+                            "spark.jars.excludes" -> "org.scala-lang:scala-reflect, org.apache.spark:spark-tags_2.11"
+                            //"spark.jars" -> "hdfs://csma0.field.hortonworks.com:8020/tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/geomesa-hbase-spark-runtime_2.11-1.3.2.jar"
+                          ),
+                          "kind" -> "spark",
+                          "name" -> "Livy Interactive Session ",
+                          "files" -> List ("hdfs://csma0.field.hortonworks.com:8020/tmp/etc/hbase/conf/hbase-site.xml"),
+                          "jars" -> List("hdfs:///tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/manuallychanges/geomesa-hbase-spark-runtime_2.11-1.3.2.jar"
+                                         )
+                          )
+
+
+    println(mapper.writeValueAsString(requestBody))
+
+    val response = httpClient.preparePost(s"$livyEndpoint/sessions/")
+      .addHeader("Content-type", "application/json")
+      .addHeader("X-Requested-By", "spark")
+      .setBody(mapper.writeValueAsString(requestBody))
+      .execute().get(2, TimeUnit.MINUTES)
+
+
+    if(response.getStatusCode != HttpServletResponse.SC_CREATED){
+      throw new RuntimeException("Unable to get session from the Session")
+    }
+
+
+    println("Cotainer")
 
   }
 

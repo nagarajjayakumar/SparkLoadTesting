@@ -3,19 +3,17 @@ package com.hortonworks.gc
 import java.util.regex.Pattern
 import javax.servlet.http.HttpServletResponse
 
-import scala.concurrent.duration._
-import scala.language.postfixOps
-import scala.util.{Either, Left, Right}
+import com.cloudera.livy.sessions.{SessionKindModule, SessionState}
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.ning.http.client.AsyncHttpClient
-import com.ning.http.client.Response
-import com.cloudera.livy.sessions.{Kind, SessionKindModule, SessionState}
-import main.scala.com.hortonworks.gc.GeoMesaBasicSimulation.{httpClient, mapper}
+import com.ning.http.client.{AsyncHttpClient, Response}
 import org.scalatest.concurrent.Eventually._
 
 import scala.collection.JavaConverters._
+import scala.concurrent.duration._
+import scala.language.postfixOps
+import scala.util.{Either, Left, Right}
 
 
 

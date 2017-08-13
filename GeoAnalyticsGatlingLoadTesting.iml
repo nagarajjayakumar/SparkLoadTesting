@@ -69,11 +69,12 @@
     <orderEntry type="library" name="Maven: org.jodd:jodd-log:3.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.cloudera.livy:livy-client-http:0.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.cloudera.livy:livy-api:0.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.cloudera.livy:livy-core:0.2.0" level="project" />
-    <orderEntry type="library" name="Maven: com.cloudera.livy:livy-client-common:0.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.cloudera.livy:livy-core_2.11:0.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.cloudera.livy:livy-client-common:0.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.esotericsoftware.kryo:kryo:2.22" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
@@ -84,7 +85,6 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.1" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-compiler:2.12.3" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.12.3" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang.modules:scala-xml_2.12:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-paranamer:2.9.0" level="project" />
