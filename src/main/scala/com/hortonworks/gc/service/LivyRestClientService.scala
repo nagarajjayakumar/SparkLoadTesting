@@ -9,7 +9,7 @@ import com.cloudera.livy.{LivyClient, LivyClientBuilder}
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.hortonworks.gc.rest.LivyRestClient
-import com.ning.http.client.AsyncHttpClient
+import com.ning.http.client.{AsyncHttpClient, AsyncHttpClientConfig}
 import org.apache.http.client.methods.HttpDelete
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
@@ -42,7 +42,8 @@ object LivyRestClientService   {
   val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
 
 
-  val httpClient: AsyncHttpClient = new AsyncHttpClient()
+  val httpClientConfig  = new AsyncHttpClientConfig.Builder().setMaxConnections(20).build()
+  val httpClient: AsyncHttpClient = new AsyncHttpClient(httpClientConfig)
   val livyRestClient: LivyRestClient = new LivyRestClient(httpClient, livyEndpoint)
 
   createLivyContainer()
