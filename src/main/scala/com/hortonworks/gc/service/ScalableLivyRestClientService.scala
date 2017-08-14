@@ -46,16 +46,7 @@ object ScalableLivyRestClientService {
   val livyRestClient: LivyRestClient =
     new LivyRestClient(httpClient, livyEndpoint)
 
-  //createLivyContainer(5)
-
-  //val sessionId = createLivySession()
-
-  //val interactiveSession = livyRestClient.connectSession(sessionId)
-
   val defaultSparkStatement = "val sparkVersion = sc.version"
-
-  //val initImports = initSparkStatement()
-
 
   def runCommand(
       sparkStatement: SparkStatement): Either[String, StatementError] = {
