@@ -23,7 +23,7 @@ import io.gatling.http.Predef._
 
 
 
-object GeoMesaBasicSimulation  extends Simulation  {
+object GeoMesaBasicSimulation  {
 
 
   class SessionList {
@@ -95,18 +95,6 @@ object GeoMesaBasicSimulation  extends Simulation  {
 
       interactiveSession.run("val sparkSession = SparkSession.builder().appName(\"testSpark\").config(\"spark.sql.crossJoin.enabled\", \"true\").config(\"zookeeper.znode.parent\", \"/hbase-unsecure\").config(\"spark.sql.autoBroadcastJoinThreshold\", 1024*1024*200).getOrCreate()").result().left.foreach(println(_))
       interactiveSession.run("val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\")).option(\"geomesa.feature\", \"event\").load()").result().left.foreach(println(_))
-
-      val scenario1 = scenario("Access Home Page")
-        .exec(
-          http("GetHomePageRequest")
-            .get("/")
-            .check(status.is(_ => 200))
-        )
-        .pause(1)
-
-      setUp(
-        scenario1.inject(rampUsers(100) over 10)
-      ).protocols()
 
       println(s" Valid session ID $sessionId")
 
