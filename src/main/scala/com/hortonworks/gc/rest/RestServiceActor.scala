@@ -7,7 +7,7 @@ import java.text.{ParseException, SimpleDateFormat}
 import java.util.Date
 
 import com.hortonworks.gc.rest.LivyRestClient.StatementError
-import com.hortonworks.gc.service.LivyRestClientService
+import com.hortonworks.gc.service.{LivyRestClientService, ScalableLivyRestClientService}
 import net.liftweb.json.Serialization._
 import net.liftweb.json.{DateFormat, Formats}
 
@@ -31,7 +31,7 @@ class RestServiceActor extends Actor with RestService {
   */
 trait RestService extends HttpService with SLF4JLogging {
 
-  val livyRestClientService = LivyRestClientService
+  val livyRestClientService = ScalableLivyRestClientService
 
   implicit val executionContext = actorRefFactory.dispatcher
 
@@ -78,12 +78,11 @@ trait RestService extends HttpService with SLF4JLogging {
   val rest = respondWithMediaType(MediaTypes.`application/json`) {
       path("insrun") {
         get {
-          parameters('statement.as[String] ?
-            ).as(SparkStatement) {
+          parameters('sessionId.as[Int] ?, 'statement.as[String] ?).as(SparkStatement) {
             sparkStatement: SparkStatement  =>
             { ctx: RequestContext =>
               handleRequest(ctx) {
-                log.debug("Searching for customers with parameters: %s".format(
+                log.debug("Interactive Spark Run Command: %s".format(
                   sparkStatement))
                 livyRestClientService.runCommand(sparkStatement)
               }
@@ -91,14 +90,46 @@ trait RestService extends HttpService with SLF4JLogging {
           }
         }
       } ~
-      path("closeConnection" ) { customerId =>
+      path("closeConnection" ) {
         get { ctx: RequestContext =>
           handleRequest(ctx) {
             log.debug("Finally Closing Connection")
             livyRestClientService.closeConnection
           }
         }
-      }
+      } ~
+        path("createLivyContainer"/ IntNumber ) {
+          numberOfExecutor =>
+          get { ctx: RequestContext =>
+            handleRequest(ctx) {
+              log.debug("Create and Start Livy Container")
+              livyRestClientService.createLivyContainer(numberOfExecutor)
+            }
+          }
+        }~
+        path("getAllIdleLivySessionIds" ) {
+          get { ctx: RequestContext =>
+            handleRequest(ctx) {
+              log.debug("Get All Idle Livy Session ID's")
+              livyRestClientService.getAllIdleLivySessionIds
+            }
+          }
+        }~
+        path("initSession") {
+          get {
+            parameters('sessionId.as[Int] ?, 'statement.as[String] ?).as(SparkStatement) {
+              sparkStatement: SparkStatement  =>
+              { ctx: RequestContext =>
+                handleRequest(ctx) {
+                  log.debug("Initialize Spark Imports for the Session : %s".format(
+                    sparkStatement))
+                  livyRestClientService.initSparkStatement(sparkStatement)
+                }
+              }
+            }
+          }
+        }
+
 
   }
 

@@ -2,36 +2,34 @@ package com.hortonworks.gc.service
 
 import java.net.URI
 import java.util.concurrent._
+import javax.servlet.http.HttpServletResponse
 
 import com.cloudera.livy.client.common.HttpMessages.SessionInfo
 import com.cloudera.livy.sessions.SessionKindModule
 import com.cloudera.livy.{LivyClient, LivyClientBuilder}
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.hortonworks.gc.domain.SparkStatement
 import com.hortonworks.gc.rest.LivyRestClient
+import com.hortonworks.gc.rest.LivyRestClient.StatementError
 import com.ning.http.client.{AsyncHttpClient, AsyncHttpClientConfig}
 import org.apache.http.client.methods.HttpDelete
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
-import javax.servlet.http.HttpServletResponse
 
-import com.hortonworks.gc.domain.{Failure, SparkStatement}
-import com.hortonworks.gc.rest.LivyRestClient.StatementError
-
+import scala.collection.mutable.ListBuffer
 import scala.util.Either
 
 //import scalaj.collection.Imports._
 //import scala.collection.JavaConversions._
 
-object LivyRestClientService {
+object ScalableLivyRestClientService {
 
   class SessionList {
     val from: Int = -1
     val total: Int = -1
     val sessions: List[SessionInfo] = Nil
   }
-
-  private var livyClient: LivyClient = _
 
   private val mapper = new ObjectMapper()
     .registerModule(DefaultScalaModule)
@@ -48,19 +46,22 @@ object LivyRestClientService {
   val livyRestClient: LivyRestClient =
     new LivyRestClient(httpClient, livyEndpoint)
 
-  createLivyContainer(5)
+  //createLivyContainer(5)
 
-  val sessionId = createLivySession(livyEndpoint)
+  //val sessionId = createLivySession()
 
-  val interactiveSession = livyRestClient.connectSession(sessionId)
+  //val interactiveSession = livyRestClient.connectSession(sessionId)
 
   val defaultSparkStatement = "val sparkVersion = sc.version"
 
-  val initImports = initSparkStatement()
+  //val initImports = initSparkStatement()
 
 
   def runCommand(
       sparkStatement: SparkStatement): Either[String, StatementError] = {
+
+    val interactiveSession = livyRestClient.connectSession(sparkStatement.sessionId.getOrElse(0))
+
     interactiveSession
       .run(sparkStatement.code.getOrElse(defaultSparkStatement))
       .result()
@@ -68,10 +69,22 @@ object LivyRestClientService {
 
   def closeConnection(): Either[String, StatementError] = {
 
-    if (livyClient != null)
-      livyClient.stop(true)
+    val list = sessionList()
 
-    livyRestClient.connectSession(sessionId).stop()
+    // get the livy session state by calling the rest api
+
+      for (sessionInfo <- list.sessions) {
+        if (sessionInfo.state.toLowerCase == "idle"
+          || sessionInfo.state.toLowerCase == "starting"
+          || sessionInfo.state.toLowerCase == "running") {
+
+          // Wait till the session is IDLE
+          livyRestClient.connectSession(sessionInfo.id).stop()
+        }
+
+      }
+
+
 
     if (httpClient != null)
       httpClient.close()
@@ -79,7 +92,7 @@ object LivyRestClientService {
     Left("""Finally All Done""")
   }
 
-  def createLivySession(livyUrl: String): Int = {
+  def createLivySession(): Int = {
 
     val list = sessionList()
 
@@ -104,7 +117,39 @@ object LivyRestClientService {
     idleSessionId
   }
 
-  def initSparkStatement(): Unit = {
+  def getAllIdleLivySessionIds(): Either[List[Int], StatementError] = {
+
+    val list = sessionList()
+
+    val idleSessionList = new ListBuffer[Int]()
+
+    var newSessionId = 0
+
+    // get the livy session state by calling the rest api
+    val idleSessionIds: List[Int] = {
+      for (sessionInfo <- list.sessions) {
+        if (sessionInfo.state.toLowerCase == "idle"
+          || sessionInfo.state.toLowerCase == "starting"
+          || sessionInfo.state.toLowerCase == "running") {
+          newSessionId = sessionInfo.id
+          // Wait till the session is IDLE
+          livyRestClient.connectSession(newSessionId).verifySessionIdle()
+          idleSessionList.+=:(newSessionId)
+        }
+
+      }
+      idleSessionList.toList
+    }
+
+    Left(idleSessionIds)
+  }
+
+
+  def initSparkStatement(sparkStatement: SparkStatement): Either[String, StatementError] = {
+
+    val sessionId = sparkStatement.sessionId.getOrElse(0)
+
+    val interactiveSession = livyRestClient.connectSession(sessionId)
 
     interactiveSession
       .run("val sparkVersion = sc.version")
@@ -138,38 +183,10 @@ object LivyRestClientService {
       .left
       .foreach(println(_))
 
-  }
-  def createClient(uri: String): LivyClient = {
-    val props =
-      Map(
-        "spark.sql.crossJoin.enabled" -> "true",
-        "zookeeper.znode.parent" -> "/hbase-unsecure",
-        "spark.sql.autoBroadcastJoinThreshold" -> "1024*1024*200",
-        "livy.spark.driver.memory" -> "1g",
-        "livy.spark.yarn.driver.memoryOverhead" -> "256",
-        "livy.spark.executor.instances" -> "10",
-        "livy.spark.executor.memory" -> "1g",
-        "livy.spark.yarn.executor.memoryOverhead" -> "256",
-        "livy.spark.executor.cores" -> "1",
-        "livy.spark.memory.fraction" -> "0.2"
-      )
+    Left(s"All Imports are Done for the session $sessionId")
 
-    /*
-     "spark.driver.memory": "1g",
-        "spark.yarn.driver.memoryOverhead": "256",
-        "spark.executor.instances": "20",
-        "spark.executor.memory": "1g",
-        "spark.yarn.executor.memoryOverhead": "256",
-        "spark.executor.cores": "1",
-        "spark.memory.fraction": "0.2"
-     */
-    new LivyClientBuilder()
-      .setURI(new URI(uri))
-      .setConf("spark.driver.memory", "1g")
-      .setConf("spark.executor.instances", "10")
-      .setConf("spark.executor.memory", "1g")
-      .build()
   }
+
 
   private def sessionList(): SessionList = {
     val response =
@@ -197,7 +214,7 @@ object LivyRestClientService {
 
   }
 
-  def createLivyContainer(numOfContainer :Int) :Either[String, StatementError] = {
+  def createLivyContainer(numOfContainer :Int): Either[String, StatementError] = {
     val requestBody = Map(
 //                          "driverMemory" -> "1g",
 //                          "numExecutors" -> 10,
@@ -242,10 +259,13 @@ object LivyRestClientService {
     Left("Container Created " + response.getStatusCode)
 
   }
-
+  // ------ Unused Methods Just use for reference  !!! No Clean UP .. shame on me
   def main(args: Array[String]): Unit = {
 
     try {
+
+      val sessionId = 0
+      val interactiveSession = livyRestClient.connectSession(sessionId)
 
       interactiveSession
         .run(
@@ -268,6 +288,38 @@ object LivyRestClientService {
       closeConnection()
 
       println("finally all done ")
+    }
+
+    def createClient(uri: String): LivyClient = {
+      val props =
+        Map(
+          "spark.sql.crossJoin.enabled" -> "true",
+          "zookeeper.znode.parent" -> "/hbase-unsecure",
+          "spark.sql.autoBroadcastJoinThreshold" -> "1024*1024*200",
+          "livy.spark.driver.memory" -> "1g",
+          "livy.spark.yarn.driver.memoryOverhead" -> "256",
+          "livy.spark.executor.instances" -> "10",
+          "livy.spark.executor.memory" -> "1g",
+          "livy.spark.yarn.executor.memoryOverhead" -> "256",
+          "livy.spark.executor.cores" -> "1",
+          "livy.spark.memory.fraction" -> "0.2"
+        )
+
+      /*
+       "spark.driver.memory": "1g",
+          "spark.yarn.driver.memoryOverhead": "256",
+          "spark.executor.instances": "20",
+          "spark.executor.memory": "1g",
+          "spark.yarn.executor.memoryOverhead": "256",
+          "spark.executor.cores": "1",
+          "spark.memory.fraction": "0.2"
+       */
+      new LivyClientBuilder()
+        .setURI(new URI(uri))
+        .setConf("spark.driver.memory", "1g")
+        .setConf("spark.executor.instances", "10")
+        .setConf("spark.executor.memory", "1g")
+        .build()
     }
 
   }
