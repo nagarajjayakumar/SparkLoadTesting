@@ -40,7 +40,15 @@ object ScalableLivyRestClientService {
   val executorService = Executors.newFixedThreadPool(10)
 
   val httpClientConfig =
-    new AsyncHttpClientConfig.Builder().setExecutorService(executorService).setMaxConnections(20).build()
+    new AsyncHttpClientConfig.Builder()
+      .setConnectTimeout(5 * 60 * 1000)
+      .setReadTimeout(5 * 60 * 1000)
+      .setWebSocketTimeout(5 * 60 * 1000)
+      .setRequestTimeout(10 * 60 * 1000)
+      .setPooledConnectionIdleTimeout(10 * 60 * 1000)
+      .setExecutorService(executorService)
+      .setMaxConnections(10)
+      .build()
 
   val httpClient: AsyncHttpClient = new AsyncHttpClient(httpClientConfig)
   val livyRestClient: LivyRestClient =

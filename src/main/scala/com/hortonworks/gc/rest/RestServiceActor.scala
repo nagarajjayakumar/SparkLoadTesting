@@ -82,7 +82,7 @@ trait RestService extends HttpService with SLF4JLogging {
             sparkStatement: SparkStatement  =>
             { ctx: RequestContext =>
               handleRequest(ctx) {
-                log.debug("Interactive Spark Run Command: %s".format(
+                log.warn("Interactive Spark Run Command: %s".format(
                   sparkStatement))
                 livyRestClientService.runCommand(sparkStatement)
               }
