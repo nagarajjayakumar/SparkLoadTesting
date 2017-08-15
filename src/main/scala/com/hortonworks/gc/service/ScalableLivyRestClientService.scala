@@ -192,10 +192,20 @@ object ScalableLivyRestClientService extends SLF4JLogging{
 
     interactiveSession
       .run(
-        " val dataFrameSiteLossAnalyz = sparkSession.read\n.format(\"geomesa\")\n.options(Map(\"bigtable.table.name\" -> \"sitelossanalysis\"))\n.option(\"geomesa.feature\", siteLossAnalyzFeatureTypeName)\n.load()\n\ndataFrameSiteLossAnalyz.createOrReplaceTempView(siteLossAnalyzFeatureTypeName)")
+        " val dataFrameSiteLossAnalyz = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"sitelossanalysis\")).option(\"geomesa.feature\", siteLossAnalyzFeatureTypeName).load()\n")
       .result()
       .left
       .foreach(println(_))
+
+    interactiveSession
+      .run(
+        "dataFrameSiteLossAnalyz.createOrReplaceTempView(siteLossAnalyzFeatureTypeName)\n")
+      .result()
+      .left
+      .foreach(println(_))
+
+
+
 
     log.warn("All statements are Initalized in the Livy Session ")
 

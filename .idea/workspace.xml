@@ -26,23 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LivyRestClientService.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/LivyRestClientService.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="51" lean-forward="false" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="51" />
-              <folding>
-                <element signature="e#36#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ScalableLivyRestClientService.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1767">
-              <caret line="26" column="57" lean-forward="false" selection-start-line="26" selection-start-column="57" selection-end-line="26" selection-end-column="57" />
+            <state relative-caret-position="366">
+              <caret line="201" column="87" lean-forward="false" selection-start-line="201" selection-start-column="87" selection-end-line="201" selection-end-column="87" />
               <folding>
                 <element signature="e#36#55#0" expanded="true" />
               </folding>
@@ -513,15 +501,15 @@
       <workItem from="1502381885390" duration="7908000" />
       <workItem from="1502407887795" duration="55662000" />
       <workItem from="1502544046050" duration="3866000" />
-      <workItem from="1502573836653" duration="57516000" />
+      <workItem from="1502573836653" duration="57750000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124952000" />
+    <option name="totallyTimeSpent" value="125186000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1440" height="873" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1062,8 +1050,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1767">
-          <caret line="26" column="57" lean-forward="false" selection-start-line="26" selection-start-column="57" selection-end-line="26" selection-end-column="57" />
+        <state relative-caret-position="366">
+          <caret line="201" column="87" lean-forward="false" selection-start-line="201" selection-start-column="87" selection-end-line="201" selection-end-column="87" />
           <folding>
             <element signature="e#36#55#0" expanded="true" />
           </folding>
