@@ -90,7 +90,14 @@ trait RestService extends HttpService with SLF4JLogging {
               handleRequest(ctx) {
                 log.warn("Interactive Spark Run Command: %s".format(
                   sparkStatement))
-                livyRestClientService.runCommand(sparkStatement)
+                val startTime = System.nanoTime
+
+                val result = livyRestClientService.runCommand(sparkStatement)
+                val endTime = System.nanoTime
+                val timeTaken = (endTime - startTime).toDouble / (1000.0)
+                log.warn(s"Average time taken in ${sparkStatement.sessionId} runs: $timeTaken seconds")
+
+                result
               }
             }
           }
