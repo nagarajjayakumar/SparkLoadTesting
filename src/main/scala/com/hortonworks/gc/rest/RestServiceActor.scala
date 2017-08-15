@@ -10,11 +10,16 @@ import com.hortonworks.gc.rest.LivyRestClient.StatementError
 import com.hortonworks.gc.service.{LivyRestClientService, ScalableLivyRestClientService}
 import net.liftweb.json.Serialization._
 import net.liftweb.json.{DateFormat, Formats}
+import spray.can.Http
 
 import scala.Some
 import spray.http._
 import spray.httpx.unmarshalling._
 import spray.routing._
+import spray.can.server.Stats
+import spray.http._
+
+import spray.httpx.marshalling.Marshaller
 
 /**
   * REST Service actor.
@@ -22,6 +27,7 @@ import spray.routing._
 class RestServiceActor extends Actor with RestService {
 
   implicit def actorRefFactory = context
+
 
   def receive = runRoute(rest)
 }
@@ -130,8 +136,40 @@ trait RestService extends HttpService with SLF4JLogging {
           }
         }
 
-
   }
+
+  implicit val statsMarshaller: Marshaller[Stats] =
+    Marshaller.delegate[Stats, String](ContentTypes.`text/plain`) { stats =>
+      "Uptime                : " + stats.uptime + '\n' +
+        "Total requests        : " + stats.totalRequests + '\n' +
+        "Open requests         : " + stats.openRequests + '\n' +
+        "Max open requests     : " + stats.maxOpenRequests + '\n' +
+        "Total connections     : " + stats.totalConnections + '\n' +
+        "Open connections      : " + stats.openConnections + '\n' +
+        "Max open connections  : " + stats.maxOpenConnections + '\n' +
+        "Requests timed out    : " + stats.requestTimeouts + '\n'
+    }
+
+
+  def statsPresentation(s: Stats) = HttpResponse(
+    entity = HttpEntity(
+      <html>
+        <body>
+          <h1>HttpServer Stats</h1>
+          <table>
+            <tr><td>uptime:</td><td>{s.uptime.formatted("")}</td></tr>
+            <tr><td>totalRequests:</td><td>{s.totalRequests}</td></tr>
+            <tr><td>openRequests:</td><td>{s.openRequests}</td></tr>
+            <tr><td>maxOpenRequests:</td><td>{s.maxOpenRequests}</td></tr>
+            <tr><td>totalConnections:</td><td>{s.totalConnections}</td></tr>
+            <tr><td>openConnections:</td><td>{s.openConnections}</td></tr>
+            <tr><td>maxOpenConnections:</td><td>{s.maxOpenConnections}</td></tr>
+            <tr><td>requestTimeouts:</td><td>{s.requestTimeouts}</td></tr>
+          </table>
+        </body>
+      </html>.toString()
+    )
+  )
 
   /**
     * Handles an incoming request and create valid response for it.
