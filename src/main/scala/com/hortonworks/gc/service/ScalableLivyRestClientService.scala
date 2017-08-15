@@ -205,8 +205,6 @@ object ScalableLivyRestClientService extends SLF4JLogging{
       .foreach(println(_))
 
 
-
-
     log.warn("All statements are Initalized in the Livy Session ")
 
     Left(s"All Imports are Done for the session $sessionId")
