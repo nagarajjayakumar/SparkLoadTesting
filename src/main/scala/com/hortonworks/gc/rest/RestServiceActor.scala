@@ -95,7 +95,7 @@ trait RestService extends HttpService with SLF4JLogging {
                 val result = livyRestClientService.runCommand(sparkStatement)
                 val endTime = System.nanoTime
                 val timeTaken = (endTime - startTime).toDouble / (1 * 1000000000.0)
-                log.warn(s"Average time taken in ${sparkStatement.sessionId} runs: $timeTaken millis")
+                log.warn(s"Average time taken in ${sparkStatement.sessionId} runs: $timeTaken seconds")
 
                 result
               }
