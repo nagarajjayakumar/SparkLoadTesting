@@ -2,6 +2,7 @@ package com.hortonworks.gc.service
 
 import java.net.URI
 import java.util.concurrent._
+import akka.event.slf4j.SLF4JLogging
 
 import com.cloudera.livy.client.common.HttpMessages.SessionInfo
 import com.cloudera.livy.sessions.SessionKindModule
@@ -23,7 +24,7 @@ import scala.util.Either
 //import scalaj.collection.Imports._
 //import scala.collection.JavaConversions._
 
-object LivyRestClientService {
+object LivyRestClientService extends   SLF4JLogging{
 
   class SessionList {
     val from: Int = -1
@@ -131,12 +132,29 @@ object LivyRestClientService {
       .result()
       .left
       .foreach(println(_))
+
     interactiveSession
       .run(
         "val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\")).option(\"geomesa.feature\", \"event\").load()")
       .result()
       .left
       .foreach(println(_))
+
+    interactiveSession
+      .run(
+        "val siteLossAnalyzFeatureTypeName = \"sitelossanalyzevent\"\nval featureTypeName = \"event\"\nval geom = \"geom\"\n\ndataFrame.createOrReplaceTempView(featureTypeName)")
+      .result()
+      .left
+      .foreach(println(_))
+
+    interactiveSession
+      .run(
+        " val dataFrameSiteLossAnalyz = sparkSession.read\n.format(\"geomesa\")\n.options(Map(\"bigtable.table.name\" -> \"sitelossanalysis\"))\n.option(\"geomesa.feature\", siteLossAnalyzFeatureTypeName)\n.load()\n\ndataFrameSiteLossAnalyz.createOrReplaceTempView(siteLossAnalyzFeatureTypeName)")
+      .result()
+      .left
+      .foreach(println(_))
+
+    log.warn("All statements are Initalized in the Livy Session ")
 
   }
   def createClient(uri: String): LivyClient = {
