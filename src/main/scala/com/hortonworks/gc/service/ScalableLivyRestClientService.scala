@@ -48,7 +48,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
       .setRequestTimeout(10 * 60 * 1000)
       .setPooledConnectionIdleTimeout(10 * 60 * 1000)
       //.setExecutorService(executorService)
-      .setMaxConnections(10)
+      .setMaxConnections(50)
       .build()
 
   val httpClient: AsyncHttpClient = new AsyncHttpClient(httpClientConfig)
