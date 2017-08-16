@@ -14,7 +14,7 @@ object Boot extends App with Configuration {
   // create and start rest service actor
   //val restService = system.actorOf(Props[RestServiceActor], "njGatling_Rest_Service_Endpoint")
 
-  val restService = system.actorOf(RoundRobinPool(10).
+  val restService = system.actorOf(RoundRobinPool(15).
                     props(Props[RestServiceActor]), "njGatling_Rest_Service_Endpoint")
 
   // start HTTP server with rest service actor as a handler
