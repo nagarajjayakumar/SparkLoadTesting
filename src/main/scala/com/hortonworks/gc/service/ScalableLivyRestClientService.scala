@@ -38,7 +38,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
 
   val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
 
-  val executorService = Executors.newFixedThreadPool(10)
+  //val executorService = Executors.newFixedThreadPool(10)
 
   val httpClientConfig =
     new AsyncHttpClientConfig.Builder()
@@ -47,7 +47,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
       .setWebSocketTimeout(5 * 60 * 1000)
       .setRequestTimeout(10 * 60 * 1000)
       .setPooledConnectionIdleTimeout(10 * 60 * 1000)
-      .setExecutorService(executorService)
+      //.setExecutorService(executorService)
       .setMaxConnections(10)
       .build()
 

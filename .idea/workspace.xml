@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c40c62f2-6a3d-4633-a65c-175abf183d82" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -26,23 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GeoMesaBasicSimulation.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/gatling/GeoMesaBasicSimulation.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="98" column="6" lean-forward="false" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
-              <folding>
-                <element signature="e#36#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="application.conf" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
+            <state relative-caret-position="561">
+              <caret line="49" column="20" lean-forward="false" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -51,7 +40,7 @@
       <file leaf-file-name="LivyRestClient.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
+            <state relative-caret-position="2193">
               <caret line="129" column="16" lean-forward="false" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
               <folding>
                 <element signature="e#33#63#0" expanded="true" />
@@ -60,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScalableLivyRestClientService.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ScalableLivyRestClientService.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="66" column="11" lean-forward="false" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="11" />
+            <state relative-caret-position="163">
+              <caret line="49" column="8" lean-forward="false" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
               <folding>
                 <element signature="e#36#55#0" expanded="true" />
               </folding>
@@ -72,10 +61,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RestServiceActor.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RestServiceActor.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
+            <state relative-caret-position="817">
               <caret line="97" column="101" lean-forward="false" selection-start-line="97" selection-start-column="101" selection-end-line="97" selection-end-column="101" />
               <folding>
                 <element signature="e#33#56#0" expanded="true" />
@@ -87,8 +76,8 @@
       <file leaf-file-name="Boot.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="16" column="52" lean-forward="false" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+            <state relative-caret-position="131">
+              <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
               <folding>
                 <element signature="e#33#71#0" expanded="true" />
               </folding>
@@ -96,31 +85,41 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="ActorSystem.scala" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/actor/ActorSystem.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-9019">
+              <caret line="24" column="7" lean-forward="false" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActorRefProvider.scala" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/actor/ActorRefProvider.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="296">
+              <caret line="243" column="6" lean-forward="false" selection-start-line="243" selection-start-column="6" selection-end-line="243" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoundRobin.scala" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/routing/RoundRobin.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1222">
+              <caret line="66" column="17" lean-forward="false" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="gatling.conf" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/gatling.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-27">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HttpService.scala" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/spray/spray-routing_2.11/1.3.1/spray-routing_2.11-1.3.1-sources.jar!/spray/routing/HttpService.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="87" column="6" lean-forward="false" selection-start-line="87" selection-start-column="6" selection-end-line="87" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Http.scala" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/spray/spray-can_2.11/1.3.1/spray-can_2.11-1.3.1-sources.jar!/spray/can/Http.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="103" column="14" lean-forward="false" selection-start-line="103" selection-start-column="14" selection-end-line="103" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -129,8 +128,8 @@
       <file leaf-file-name="reference.conf" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/reference.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="144" column="11" lean-forward="false" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="11" />
+            <state relative-caret-position="6349">
+              <caret line="393" column="49" lean-forward="false" selection-start-line="393" selection-start-column="36" selection-end-line="393" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -148,10 +147,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>start</find>
-      <find>startse</find>
-      <find>http</find>
-      <find>httpClient</find>
       <find>prepare</find>
       <find>java</find>
       <find>Predef</find>
@@ -178,6 +173,10 @@
       <find>reaping-cycle</find>
       <find>response-size-hint</find>
       <find>registr</find>
+      <find>f</find>
+      <find>dispatcher</find>
+      <find>default</find>
+      <find>default-dispa</find>
     </findStrings>
     <replaceStrings>
       <replace>2.9.0</replace>
@@ -215,11 +214,11 @@
         <option value="$PROJECT_DIR$/src/main/resources/logback.xml" />
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/LivyRestClientService.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" />
         <option value="$PROJECT_DIR$/src/main/resources/reference.conf" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala" />
         <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" />
       </list>
     </option>
   </component>
@@ -612,12 +611,12 @@
       <workItem from="1502381885390" duration="7908000" />
       <workItem from="1502407887795" duration="55662000" />
       <workItem from="1502544046050" duration="3866000" />
-      <workItem from="1502573836653" duration="66560000" />
+      <workItem from="1502573836653" duration="69738000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133996000" />
+    <option name="totallyTimeSpent" value="137174000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -712,22 +711,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/io/spray/spray-routing/1.3.1/spray-routing-1.3.1.jar!/spray/routing/HttpServiceBase.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="6" lean-forward="false" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12.jar!/akka/actor/Actor.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/net/liftweb/lift-json_2.11/3.1.0/lift-json_2.11-3.1.0.jar!/net/liftweb/json/Serialization.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -756,14 +739,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/actor/ActorRefProvider.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="188" column="6" lean-forward="false" selection-start-line="188" selection-start-column="6" selection-end-line="188" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1064,60 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/reference.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="144" column="11" lean-forward="false" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/gatling.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" column="52" lean-forward="false" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
-          <folding>
-            <element signature="e#33#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="66" column="11" lean-forward="false" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="11" />
-          <folding>
-            <element signature="e#36#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="129" column="16" lean-forward="false" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
-          <folding>
-            <element signature="e#33#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/gatling/GeoMesaBasicSimulation.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1128,12 +1049,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/gatling.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-27">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/reference.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6349">
+          <caret line="393" column="49" lean-forward="false" selection-start-line="393" selection-start-column="36" selection-end-line="393" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="49" column="20" lean-forward="false" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2193">
+          <caret line="129" column="16" lean-forward="false" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
+          <folding>
+            <element signature="e#33#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
+        <state relative-caret-position="817">
           <caret line="97" column="101" lean-forward="false" selection-start-line="97" selection-start-column="101" selection-end-line="97" selection-end-column="101" />
           <folding>
             <element signature="e#33#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/routing/RoundRobin.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1222">
+          <caret line="66" column="17" lean-forward="false" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/actor/ActorRefProvider.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="243" column="6" lean-forward="false" selection-start-line="243" selection-start-column="6" selection-end-line="243" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+          <folding>
+            <element signature="e#33#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/typesafe/akka/akka-actor_2.11/2.4.12/akka-actor_2.11-2.4.12-sources.jar!/akka/actor/ActorSystem.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9019">
+          <caret line="24" column="7" lean-forward="false" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="49" column="8" lean-forward="false" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+          <folding>
+            <element signature="e#36#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
