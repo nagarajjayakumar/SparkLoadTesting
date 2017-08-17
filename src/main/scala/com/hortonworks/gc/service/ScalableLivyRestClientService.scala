@@ -36,7 +36,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
     .registerModule(DefaultScalaModule)
     .registerModule(new SessionKindModule())
 
-  val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
+  val livyEndpoint = "http://usdf23v0378.mrshmc.com:9888"
 
   //val executorService = Executors.newFixedThreadPool(10)
 
@@ -259,7 +259,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
       "kind" -> "spark",
       "name" -> "Livy Interactive Session ",
       "files" -> List(
-        "hdfs://csma0.field.hortonworks.com:8020/tmp/etc/hbase/conf/hbase-site.xml"),
+        "hdfs:///tmp/etc/hbase/conf/hbase-site.xml"),
       "jars" -> List(
         "hdfs:///tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/manuallychanges/geomesa-hbase-spark-runtime_2.11-1.3.2.jar")
     )
