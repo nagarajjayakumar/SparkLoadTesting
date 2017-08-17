@@ -178,21 +178,21 @@ object ScalableLivyRestClientService extends SLF4JLogging{
       .foreach(println(_))
     interactiveSession
       .run(
-        "val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"siteexposure_1M\")).option(\"geomesa.feature\", \"event\").load()")
+        "val dataFrame = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"site_exposure_1M\")).option(\"geomesa.feature\", \"siteexposure_event\").load()")
       .result()
       .left
       .foreach(println(_))
 
     interactiveSession
       .run(
-        "val siteLossAnalyzFeatureTypeName = \"sitelossanalyzevent\"\nval featureTypeName = \"event\"\nval geom = \"geom\"\n\ndataFrame.createOrReplaceTempView(featureTypeName)")
+        "val siteLossAnalyzFeatureTypeName = \"sitelossanalyzevent\"\nval featureTypeName = \"siteexposure_event\"\nval geom = \"geom\"\n \ndataFrame.createOrReplaceTempView(featureTypeName)")
       .result()
       .left
       .foreach(println(_))
 
     interactiveSession
       .run(
-        " val dataFrameSiteLossAnalyz = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"sitelossanalysis\")).option(\"geomesa.feature\", siteLossAnalyzFeatureTypeName).load()\n")
+        "  val dataFrameSiteLossAnalyz = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"site_loss_analysis_1M\")).option(\"geomesa.feature\", siteLossAnalyzFeatureTypeName).load()")
       .result()
       .left
       .foreach(println(_))
