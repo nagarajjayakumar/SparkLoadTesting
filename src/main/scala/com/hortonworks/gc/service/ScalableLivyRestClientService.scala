@@ -310,9 +310,9 @@ object ScalableLivyRestClientService extends SLF4JLogging{
         "spark.driver.memory" -> "1g",
         "spark.yarn.driver.memoryOverhead" -> "256",
         s"spark.executor.instances" -> s"$numOfContainer",
-        "spark.executor.memory" -> "1g",
+        "spark.executor.memory" -> "2g",
         "spark.yarn.executor.memoryOverhead" -> "256",
-        "spark.executor.cores" -> "1",
+        "spark.executor.cores" -> "5",
         "spark.memory.fraction" -> "0.2",
         "spark.jars.excludes" -> "org.scala-lang:scala-reflect, org.apache.spark:spark-tags_2.11"
         //"spark.jars" -> "hdfs://csma0.field.hortonworks.com:8020/tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/geomesa-hbase-spark-runtime_2.11-1.3.2.jar"
