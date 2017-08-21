@@ -145,7 +145,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
   }
 
 
-  def initSparkStatement(sparkStatement: SparkStatement): Either[String, StatementError] = {
+  def initSparkStatementForUsecase4(sparkStatement: SparkStatement): Either[String, StatementError] = {
 
     val sessionId = sparkStatement.sessionId.getOrElse(0)
 
@@ -211,6 +211,65 @@ object ScalableLivyRestClientService extends SLF4JLogging{
 
   }
 
+
+  def initSparkStatementForUsecase5(sparkStatement: SparkStatement): Either[String, StatementError] = {
+
+    val sessionId = sparkStatement.sessionId.getOrElse(0)
+
+    val interactiveSession = livyRestClient.connectSession(sessionId)
+
+    interactiveSession
+      .run("val sparkVersion = sc.version")
+      .result()
+      .left
+      .foreach(println(_))
+    println(s" Valid session ID $sessionId")
+
+    interactiveSession
+      .run("val sc = sparkSession.sparkContext\nval sqlContext = new SQLContext(sc)\nsqlContext.udf.register(\"WIDTH_BUCKET_1\" , com.hortonworks.gc.udf.WidthBucket.widthBucket _)   \n")
+      .result()
+      .left
+
+    interactiveSession
+      .run(
+      " val sqlQuery = \"SELECT MAX((((se.cov1val + se.cov2val) + se.cov3val) + se.cov4val)) AS max_10, se.portfolio_id as portfolio_id, se.site_id as site_id  FROM siteexposure_event se  GROUP BY se.portfolio_id, se.site_id   \"")
+      .result()
+      .left
+      .foreach(println(_))
+    interactiveSession
+      .run(
+        " val resultDataFrame = sparkSession.sql(sqlQuery)\n    resultDataFrame.createOrReplaceTempView(\"myview\")\n   ")
+      .result()
+      .left
+      .foreach(println(_))
+
+    interactiveSession
+      .run(
+        " val sqlQuery1 = \"SELECT max_10 , WIDTH_BUCKET_1(max_10, 150.000000, 3990682000.000000, 99) AS BIN, portfolio_id, site_id FROM myview \"")
+      .result()
+      .left
+      .foreach(println(_))
+
+    interactiveSession
+      .run(
+        "  val dataFrameSiteLossAnalyz = sparkSession.read.format(\"geomesa\").options(Map(\"bigtable.table.name\" -> \"site_loss_analysis_1M\")).option(\"geomesa.feature\", siteLossAnalyzFeatureTypeName).load()")
+      .result()
+      .left
+      .foreach(println(_))
+
+    interactiveSession
+      .run(
+        " val resultDataFrame1 = sparkSession.sql(sqlQuery1)\n    resultDataFrame1.createOrReplaceTempView(\"myview1\")")
+      .result()
+      .left
+      .foreach(println(_))
+
+
+    log.warn("All statements are Initalized for usecase 5 in the Livy Session ")
+
+    Left(s"All Imports are Done for the session $sessionId")
+
+  }
 
   private def sessionList(): SessionList = {
     val response =

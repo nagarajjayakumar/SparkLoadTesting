@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c40c62f2-6a3d-4633-a65c-175abf183d82" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -30,11 +32,43 @@
       <file leaf-file-name="ScalableLivyRestClientService.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="194" column="204" lean-forward="false" selection-start-line="194" selection-start-column="204" selection-end-line="194" selection-end-column="204" />
+            <state relative-caret-position="134">
+              <caret line="214" column="35" lean-forward="false" selection-start-line="214" selection-start-column="6" selection-end-line="214" selection-end-column="35" />
               <folding>
                 <element signature="e#36#55#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LivyRestClient.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+              <folding>
+                <element signature="e#33#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RestServiceActor.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="355">
+              <caret line="139" column="84" lean-forward="false" selection-start-line="139" selection-start-column="84" selection-end-line="139" selection-end-column="84" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SparkStatement.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/domain/SparkStatement.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -51,7 +85,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>java</find>
       <find>Predef</find>
       <find>scala</find>
       <find>Map</find>
@@ -81,6 +114,7 @@
       <find>default-dispa</find>
       <find>pipelining-limit</find>
       <find>site_exposure_1M</find>
+      <find>startSession</find>
     </findStrings>
     <replaceStrings>
       <replace>2.9.0</replace>
@@ -116,13 +150,13 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/gatling/GeoMesaBasicSimulation.scala" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/logback.xml" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/LivyRestClientService.scala" />
         <option value="$PROJECT_DIR$/src/main/resources/reference.conf" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" />
         <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/Boot.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala" />
       </list>
     </option>
   </component>
@@ -160,7 +194,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="873" />
@@ -180,9 +214,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -285,7 +316,10 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -509,14 +543,16 @@
       <workItem from="1502544046050" duration="3866000" />
       <workItem from="1502573836653" duration="70924000" />
       <workItem from="1502897702296" duration="1269000" />
+      <workItem from="1503185694143" duration="1218000" />
+      <workItem from="1503310968269" duration="895000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139813000" />
+    <option name="totallyTimeSpent" value="146202000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="873" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="873" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -531,7 +567,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2639485" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27110156" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -703,13 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/domain/SparkStatement.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="35" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/cloudera/livy/livy-client-common/0.3.0/livy-client-common-0.3.0.jar!/com/cloudera/livy/client/common/HttpMessages.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -763,7 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -823,7 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="516">
           <caret line="184" column="30" lean-forward="false" selection-start-line="184" selection-start-column="25" selection-end-line="184" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -874,7 +901,7 @@
         <state relative-caret-position="17">
           <caret line="98" column="6" lean-forward="false" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
           <folding>
-            <element signature="e#36#55#0" expanded="true" />
+            <element signature="e#36#55#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -890,7 +917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="66" column="17" lean-forward="false" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -898,7 +924,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3893">
           <caret line="243" column="6" lean-forward="false" selection-start-line="243" selection-start-column="6" selection-end-line="243" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -906,7 +931,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="24" column="7" lean-forward="false" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -914,7 +938,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="32" column="20" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -922,37 +945,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
-          <folding>
-            <marker date="1502995251000" expanded="true" signature="94:149" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="154:252" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="282:502" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="363:483" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="532:713" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="609:692" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="737:1001" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="774:824" ph="{...}" />
-            <marker date="1502995251000" expanded="true" signature="845:998" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
-          <folding>
-            <element signature="e#33#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1190">
-          <caret line="97" column="101" lean-forward="false" selection-start-line="97" selection-start-column="101" selection-end-line="97" selection-end-column="101" />
-          <folding>
-            <element signature="e#33#56#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -961,15 +953,41 @@
         <state relative-caret-position="272">
           <caret line="16" column="52" lean-forward="false" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
           <folding>
-            <element signature="e#33#71#0" expanded="true" />
+            <element signature="e#33#71#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/domain/SparkStatement.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/LivyRestClient.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding>
+            <element signature="e#33#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/rest/RestServiceActor.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="139" column="84" lean-forward="false" selection-start-line="139" selection-start-column="84" selection-end-line="139" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/hortonworks/gc/service/ScalableLivyRestClientService.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="194" column="204" lean-forward="false" selection-start-line="194" selection-start-column="204" selection-end-line="194" selection-end-column="204" />
+        <state relative-caret-position="134">
+          <caret line="214" column="35" lean-forward="false" selection-start-line="214" selection-start-column="6" selection-end-line="214" selection-end-column="35" />
           <folding>
             <element signature="e#36#55#0" expanded="true" />
           </folding>

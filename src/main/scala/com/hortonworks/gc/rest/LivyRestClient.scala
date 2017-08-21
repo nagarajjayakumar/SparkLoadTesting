@@ -111,6 +111,7 @@ class LivyRestClient(val httpClient: AsyncHttpClient, val livyEndpoint: String) 
     def verifySessionSuccess(): Unit = verifySessionState(SessionState.Success())
   }
 
+
   class InteractiveSession(id: Int) extends Session(id, INTERACTIVE_TYPE) {
     class Statement(code: String) {
       val stmtId = {

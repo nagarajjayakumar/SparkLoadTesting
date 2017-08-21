@@ -136,7 +136,8 @@ trait RestService extends HttpService with SLF4JLogging {
                 handleRequest(ctx) {
                   log.debug("Initialize Spark Imports for the Session : %s".format(
                     sparkStatement))
-                  livyRestClientService.initSparkStatement(sparkStatement)
+                  livyRestClientService.initSparkStatementForUsecase4(sparkStatement)
+                  livyRestClientService.initSparkStatementForUsecase5(sparkStatement)
                 }
               }
             }
