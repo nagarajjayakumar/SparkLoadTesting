@@ -129,7 +129,7 @@ class LivyRestClient(val httpClient: AsyncHttpClient, val livyEndpoint: String) 
       }
 
       final def result(): Either[String, StatementError] = {
-        eventually(timeout(1 minute), interval(4 second)) {
+        eventually(timeout(2 minute), interval(4 second)) {
           val r = httpClient.prepareGet(s"$url/statements/$stmtId")
             .addHeader("Content-type", "application/json")
             .addHeader("X-Requested-By", "spark")
