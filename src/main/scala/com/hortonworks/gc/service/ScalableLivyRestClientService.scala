@@ -36,9 +36,9 @@ object ScalableLivyRestClientService extends SLF4JLogging{
     .registerModule(DefaultScalaModule)
     .registerModule(new SessionKindModule())
 
-  //val livyEndpoint = "http://usdf23v0378.mrshmc.com:9888"
+  val livyEndpoint = "http://usdf23v0378.mrshmc.com:9888"
 
-  val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
+  //val livyEndpoint = "http://cssc0.field.hortonworks.com:9888"
 
   //val executorService = Executors.newFixedThreadPool(10)
 
@@ -85,8 +85,6 @@ object ScalableLivyRestClientService extends SLF4JLogging{
         }
 
       }
-
-
 
     if (httpClient != null)
       httpClient.close()
