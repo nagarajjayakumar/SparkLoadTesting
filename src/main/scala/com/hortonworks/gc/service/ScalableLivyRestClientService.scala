@@ -308,7 +308,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
         "spark.driver.memory" -> "1g",
         "spark.yarn.driver.memoryOverhead" -> "256",
         s"spark.executor.instances" -> s"$numOfContainer",
-        "spark.executor.memory" -> "2g",
+        "spark.executor.memory" -> "1g",
         "spark.yarn.executor.memoryOverhead" -> "256",
         "spark.executor.cores" -> "5",
         "spark.memory.fraction" -> "0.2",
@@ -320,7 +320,7 @@ object ScalableLivyRestClientService extends SLF4JLogging{
       "files" -> List(
         "hdfs:///tmp/etc/hbase/conf/hbase-site.xml"),
       "jars" -> List(
-        "hdfs:///tmp/geomesa/geomesa-hbase_2.11-1.3.2/dist/spark/manuallychanges/geomesa-hbase-spark-runtime_2.11-1.3.2.jar" ,
+        "hdfs:///tmp/geomesa/geomesa-hbase_2.11-1.3.3/dist/spark/manuallychanges/geomesa-hbase-spark-runtime_2.11-1.3.3.jar" ,
         "hdfs:///tmp/geoanalytics-1.0-SNAPSHOT.jar")
     )
 
